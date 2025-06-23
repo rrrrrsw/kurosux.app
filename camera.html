@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>カメラで金魚探し</title>
+  <style>
+    video { width: 100%; max-height: 80vh; object-fit: cover; }
+    .message { text-align: center; font-size: 1.5em; margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <video id="video" autoplay playsinline></video>
+  <div class="message" id="message">金魚を見つけよう！</div>
+
+  <script>
+    // カメラを起動
+    const video = document.getElementById('video');
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then(stream => video.srcObject = stream)
+      .catch(err => console.error('カメラエラー:', err));
+
+    // デモ：5秒後に金魚発見（実際はQR検出などに置き換え）
+    setTimeout(() => {
+      const goldfishName = '赤い金魚';
+      const key = `goldfish-${goldfishName}`;
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, new Date().toISOString());
+        document.getElementById('message').innerText = `${goldfishName}を捕まえた！`;
+      } else {
+        document.getElementById('message').innerText = `${goldfishName}はもう捕まえたよ！`;
+      }
+      setTimeout(() => location.href = 'collection.html', 3000);
+    }, 5000);
+  </script>
+</body>
+</html>

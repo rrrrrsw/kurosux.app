@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金魚コレクション</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; }
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.5em 0; border-bottom: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>🎏 捕まえた金魚たち</h1>
+  <ul id="list"></ul>
+  <script>
+    const list = document.getElementById('list');
+    for (let key in localStorage) {
+      if (key.startsWith('goldfish-')) {
+        const name = key.replace('goldfish-', '');
+        const date = new Date(localStorage.getItem(key)).toLocaleString();
+        const li = document.createElement('li');
+        li.textContent = `${name}（${date}）`;
+        list.appendChild(li);
+      }
+    }
+  </script>
+</body>
+</html>
